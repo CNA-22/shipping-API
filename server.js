@@ -6,9 +6,35 @@ const emailRoutes = require('./api/routes/email');
 const PORT = process.env.PORT || 3030;
 
 
-app.use('/inventory', inventoryRoutes);
-app.use('/email', emailRoutes);
 
+/*
+app.use('/inventory', inventoryRoutes);
+app.use('/email', emailRoutes); */
 app.get('/test', (req, res) => res.json("Testing"));
 
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+
+
+
+var fs = require("fs");
+
+app.get('/test', (req, res) => res.json("Det funkar!"));
+
+app.get('/listUsers', function (req, res) {
+   fs.readFile( __dirname + "/" + "user.json", 'utf8', function (err, data) {
+      console.log( data );
+      res.end( data );
+   });
+})
+
+app.delete('/deleteUser', function (req, res) {
+    // First read existing users.
+    fs.readFile( __dirname + "/" + "user.json", 'utf8', function (err, data) {
+       data = JSON.parse( data );
+       delete data["user" + 2];
+ 
+       console.log( data );
+       res.end( JSON.stringify(data));
+    });
+ }) 
+
+app.listen(PORT, () => console.log(`Server listening on port ${PORT}`)); 
