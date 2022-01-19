@@ -1,0 +1,18 @@
+@baseUrl = http://localhost:3030
+
+GET {{baseUrl}}/inventory
+
+###
+
+POST {{baseUrl}}/email/1
+
+###
+
+DELETE {{baseUrl}}/inventory/2
+
+###
+
+GET {{baseUrl}}/inventory/listUsers
+
+###
+

@@ -1,0 +1,22 @@
+{
+   "product1" : {
+      "name" : "CardOne",
+      "price" : 50,
+      "id": 1,
+      "stock": 20
+   },
+
+   "product2" : {
+      "name" : "CardTwo",
+      "price" : 70,
+      "id": 2,
+      "stock": 10
+   },
+
+   "product3" : {
+      "name" : "CardThree",
+      "price" : 120,
+      "id": 3,
+      "stock": 5
+   }
+}
