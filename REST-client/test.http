@@ -8,11 +8,22 @@ POST {{baseUrl}}/email/1
 
 ###
 
-DELETE {{baseUrl}}/inventory/2
+DELETE {{baseUrl}}/inventory/1/2
 
 ###
 
 GET {{baseUrl}}/inventory/listUsers
 
 ###
+
+PATCH {{baseUrl}}/inventory/1
+
+{
+    "test3": 
+}
+
+
+###
+
+PATCH {{baseUrl}}/inventory/1/2
 

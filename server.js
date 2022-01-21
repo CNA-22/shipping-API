@@ -3,14 +3,17 @@ const app = express();
 const inventoryRoutes = require('./api/routes/inventory');
 const emailRoutes = require('./api/routes/email');
 
+
+
+
 const PORT = process.env.PORT || 3030;
 
 
-
+/*fetch('https://regres.in/api/users/23').then(res => res.json()).then(data => console.log(data))*/
 
 app.use('/inventory', inventoryRoutes);
 app.use('/email', emailRoutes);
-app.get('/test', (req, res) => res.json("Testing"));
+app.get('/test', (req, res) => res.json("Testing")); 
 
 
 
