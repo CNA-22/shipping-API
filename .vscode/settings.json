@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/9e4884cb-08e4-4fcc-9f86-df648f014f28/resourceGroups/cna22-shipping-service_group/providers/Microsoft.Web/sites/cna22-shipping-service",
+    "appService.deploySubpath": "."
+}
