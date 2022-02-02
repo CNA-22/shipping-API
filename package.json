@@ -17,8 +17,9 @@
   },
   "homepage": "https://github.com/The-government0/shipping-API#readme",
   "dependencies": {
+    "axios": "^0.25.0",
     "express": "^4.17.2",
-    "node-fetch": "^2.0.0",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "request": "^2.88.2"
   }
 }
