@@ -34,21 +34,21 @@ https://cna22-shipping-service.azurewebsites.net/api/shipping/reduce?id=4&quanti
   "message": "Quantity must be a number over 0"
 }
 ```
-#### Returns 404 if Product ID could not be found in Inventory Service:
+#### Returns status 404 if Product ID could not be found in Inventory Service:
 ```
 {
   "status": "404",
   "message": "ProductId not Found"
 }
 ```
-#### Returns 403 if Inventory Service does not have enough products to reduce:
+#### Returns status 403 if Inventory Service does not have enough products to reduce:
 ```
 {
   "status": "403",
   "message": "Not Enough Products to reduce"
 }
 ```
-#### Any other error will return 501:
+#### Any other error will return status 501:
 ```
 {
   "status": "501",
@@ -85,7 +85,7 @@ content-type: application/json
 }
 ```
 
-#### Returns status 400 if id or quantity is equals null:
+#### Returns status 400 if id, quantity or productName is equals null:
 ```
 {
   "status": "400",
@@ -100,21 +100,21 @@ content-type: application/json
   "message": "Quantity must be a number over 0"
 }
 ```
-#### Returns 404 if Product ID could not be found in Inventory Service:
+#### Returns status 404 if Product ID could not be found in Inventory Service:
 ```
 {
   "status": "404",
   "message": "ProductId not Found"
 }
 ```
-#### Returns 403 if Inventory Service does not have enough products to reduce:
+#### Returns status 403 if Inventory Service does not have enough products to reduce:
 ```
 {
   "status": "403",
   "message": "Not Enough Products to reduce"
 }
 ```
-#### Any other error will return 501:
+#### Any other error will return status 501:
 ```
 {
   "status": "501",
