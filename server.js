@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3030;
 app.use('/api/shipping', shippingRoutes);
 app.get('/', (req, res) => res.json({
    message: "This is a Shipping Service",
-   status: '200'
+   status: res.statusCode
 }));
 
 app.use((req, res, next) => {
@@ -19,7 +19,7 @@ app.use((error, req, res) =>{
    res.status(error.status || 500);
    res.json({
       status: error.status,
-       error: error.message
+      error: error.message
    });
 });
 

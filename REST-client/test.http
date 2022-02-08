@@ -4,6 +4,18 @@ GET {{baseUrl}}
 
 ###
 
-POST {{baseUrl}}/api/shipping/reduce?id=4&quantity=1&email=eklofcas@arcada.fi
+POST {{baseUrl}}/api/shipping/test
+content-type: application/json
 
+{
+    "id": "2",
+    "quantity": "2",
+    "email": "eklofcas@arcada.fi",
+    "productName" : "Asus GeForce RTX 3080 ROG Strix - OC Edition -näytönohjain, 12GB GDDR6X"
+}
+
+###
+
+
+ POST {{baseUrl}}/api/shipping/reduce?id=4&quantity=1&email=eklofcas@arcada.fi
 
