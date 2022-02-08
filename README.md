@@ -76,6 +76,7 @@ JSON body must contain:
 #### Example body:
 ```
 content-type: application/json
+
 {
     "id": "2",
     "quantity": "2",
