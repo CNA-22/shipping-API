@@ -9,6 +9,7 @@ app.get('/', (req, res) => res.json({
    status: res.statusCode
 }));
 
+
 app.use((req, res, next) => {
    const error = new Error('Not Found');
    error.status = 404;

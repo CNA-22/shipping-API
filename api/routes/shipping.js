@@ -3,20 +3,21 @@ const express = require('express');
 const router = express.Router();
 var bodyParser = require('body-parser')
 const axios = require('axios');
-const { append, sendStatus } = require('express/lib/response');
-const e = require('express');
-const { quiet } = require('nodemon/lib/utils');
-const res = require('express/lib/response');
+const cors = require('cors');
+require('dotenv').config();
+//const { append, sendStatus } = require('express/lib/response');
+//const e = require('express');
+//const { quiet } = require('nodemon/lib/utils');
+//const res = require('express/lib/response');
+const token = process.env.AUTH_TOKEN;
 
 router.use(bodyParser.json());
 
-router.post('/reduce', async (req,res) =>{
-    //console.log('1',req.headers)
-    //console.log('2',req.query)
+// Access Control Allow Any Origin
+router.use(cors());
 
-    jsonBody = req.body;
-    console.log(req.body);
-    
+// Endpoint with query parameters
+router.post('/reduce', async (req,res) =>{
     id = req.query.id;
     quantity = req.query.quantity;
     email = req.query.email;
@@ -34,9 +35,9 @@ router.post('/reduce', async (req,res) =>{
             message: 'Quantity must be a number over 0'
         });
     }
-    let storageStatus = await storageCaller();
+    let storageStatus = await storageCaller(id, quantity);
 
-    console.log(storageStatus);
+    //console.log(storageStatus);
 
     if(storageStatus == 404){
         res.status(404).json({
@@ -53,15 +54,22 @@ router.post('/reduce', async (req,res) =>{
     else if (storageStatus != 200) {
         res.status(501).json({
             status: 501,
-            message: 'Not Ok'
+            message: 'The server does not support the functionality required to fulfill the request'
         })
     }
     //Not working atm
     //sendEmail(email)
 
-    res.sendStatus(200);
+    res.json({
+        message: 'Shippment was succesfully sent',
+        status: res.statusCode,
+        shippingStatus: 'Shippment was sent to ' + email,
+        quantity: quantity,
+        id: id
+     });
 })
 
+// Storage Caller function
 async function storageCaller(id, quantity){
     //Add correct API here 
     //TEST
@@ -70,26 +78,32 @@ async function storageCaller(id, quantity){
     // Borde vara post men inventeroy apin kan patchas direkt ¯\_(ツ)_/¯
     /*let res = await axios.patch('https://cna-inventory-service.herokuapp.com/products/'+id, {
         sku: id,
-        pris: '10',
+        //Inventory api patch endpoint requires pris
+        pris: '0',
         antal: quantity
-    }) */
+    }); */
     console.log('storageCaller check');
     return res.status;
     
 }
 
+//Send Email function
 async function sendEmail(email){
-    let res = await axios.post(
-        'https://cna-email-fw-teaching.rahtiapp.fi/sendmail', {
+    const options = {
+        headers: {'Content-Type': 'application/json',  'Authorization': `Bearer ${token}`}
+    }
+    console.log(options);
+    let res = await axios.post('https://cna-email-fw-teaching.rahtiapp.fi/sendmail', {
         to: email, 
         subject: "Test mail Newest", 
         body: "Testmail message" 
-        });
+        }, options);
+        console.log(res.status + ' Email Sent Successfully to '+ email);
     return res.status;
 }
 
-router.post('/test', async(req,res) =>{
-    test = req.body;
+// JSON Body Endpoint
+router.post('/reduce/product', async(req,res) =>{
     id = req.body.id;
     quantity = req.body.quantity;
     //Get email from db or post json body?
@@ -97,7 +111,7 @@ router.post('/test', async(req,res) =>{
     email = req.body.email;
     product = req.body.productName
 
-    if(id == null || quantity == null || email == null) {
+    if(id == null || quantity == null || product == null) {
         res.status(400).json({
             status:'400',
             message: 'Id, Quantity or Email is missing'
@@ -129,17 +143,19 @@ router.post('/test', async(req,res) =>{
     else if (storageStatus != 200) {
         res.status(501).json({
             status: 501,
-            message: 'Not Ok'
+            message: 'The server does not support the functionality required to fulfill the request'
         })
     }
     //Not working atm
-    //sendEmail(email)
+    sendEmail(email)
 
     //res.sendStatus(200);
     console.log("Last check");
     res.json({
        message: 'Shippment was succesfully sent',
+       status: res.statusCode,
        shippingStatus: 'Shippment was sent to ' + email,
+       emailSent: 'true',
        quantity: quantity,
        id: id,
        product: product

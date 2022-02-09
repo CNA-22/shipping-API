@@ -1,15 +1,16 @@
 @baseUrl = http://localhost:3030
+@token = "foo"
 
 GET {{baseUrl}}
 
 ###
 
-POST {{baseUrl}}/api/shipping/test
+POST {{baseUrl}}/api/shipping/reduce/product
 content-type: application/json
 
 {
-    "id": "2",
-    "quantity": "2",
+    "id": "56564982",
+    "quantity": "10",
     "email": "eklofcas@arcada.fi",
     "productName" : "Asus GeForce RTX 3080 ROG Strix - OC Edition -näytönohjain, 12GB GDDR6X"
 }
@@ -17,5 +18,5 @@ content-type: application/json
 ###
 
 
- POST {{baseUrl}}/api/shipping/reduce?id=4&quantity=1&email=eklofcas@arcada.fi
+ POST {{baseUrl}}/api/shipping/reduce?id=1&quantity=1&email=eklofcas@arcada.fi
 
