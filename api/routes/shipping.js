@@ -94,7 +94,7 @@ async function apiFunction(id, quantity, email, authHeader, res) {
     if(id == null || quantity == null || email == null) {
         return res.status(400).json({
             status: res.statusCode,
-            message: 'Id, Quantity or Product Name is missing'
+            message: 'Id, Quantity or Email is missing'
         });
     }
     else if(!(quantity > 0)) {
