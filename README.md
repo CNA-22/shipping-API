@@ -2,27 +2,30 @@
 
 ### This collection contains following requests:
 
-### GET [https://cna22-shipping-service.azurewebsites.net/]
+### GET
+Endpoint: https://cna22-shipping-service.azurewebsites.net/ 
 #### Returns a message:
 ```
 {"message":"This is a Shipping Service","status":200}
 ```
 
-### POST [https://cna22-shipping-service.azurewebsites.net/api/shipping/reduce?id=4&quantity=1&email=eklofcas@arcada.fi]
+### POST
 This is a post endpoint with query parameters <br/>
+Endpoint: https://cna22-shipping-service.azurewebsites.net/api/shipping/reduce <br/>
 Url must contain:
 * ID
 * Quantity
+* Email
 
 #### Example URL:
 
-https://cna22-shipping-service.azurewebsites.net/api/shipping/reduce?id=4&quantity=1&email=eklofcas@arcada.fi
+https://cna22-shipping-service.azurewebsites.net/api/shipping/reduce?id=1&quantity=1&email=jepulis.jepjepjep@gmail.com
 
 #### Returns status 400 if id or quantity is equals null:
 ```
 {
-  "status": "400",
-  "message": "Id or Quantity missing"
+  "status": 400,
+  "message": "Id, Quantity or Email is missing"
 }
 ```
 
@@ -58,38 +61,39 @@ https://cna22-shipping-service.azurewebsites.net/api/shipping/reduce?id=4&quanti
 #### A successful Api request will return the following:
 ```
 {
-  "message": "Shippment was succesfully sent",
+  "message": "Package was succesfully shipped and email confirmation was sent to jepulis.jepjepjep@gmail.com",
   "status": 200,
-  "shippingStatus": "Shippment was sent to eklofcas@arcada.fi",
-  "quantity": "1",
-  "id": "4"
+  "shippingStatus": "Shippment was sent to jepulis.jepjepjep@gmail.com",
+  "emailSent": true,
+  "quantity": "10",
+  "id": "1000020000123"
 }
 ```
 
-### POST [https://cna22-shipping-service.azurewebsites.net/api/shipping/test]
+### POST
 This is a post endpoint with JSON body <br/>
+Endpoint:https://cna22-shipping-service.azurewebsites.net/api/shipping/reduce/product <br/>
 JSON body must contain:
 * ID
 * Quantity
-* ProductName
+* Email
 
 #### Example body:
 ```
 content-type: application/json
 
 {
-    "id": "2",
-    "quantity": "2",
-    "email": "eklofcas@arcada.fi",
-    "productName" : "Asus GeForce RTX 3080 ROG Strix - OC Edition -näytönohjain, 12GB GDDR6X"
+    "id": "1000020000123",
+    "quantity": "10",
+    "email": "jepulis.jepjepjep@gmail.com"
 }
 ```
 
 #### Returns status 400 if id, quantity or productName is equals null:
 ```
 {
-  "status": "400",
-  "message": "Id or Quantity missing"
+  "status": 400,
+  "message": "Id, Quantity or Email is missing"
 }
 ```
 
@@ -124,12 +128,11 @@ content-type: application/json
 #### A successful Api request will return the following:
 ```
 {
-  "message": "Shippment was succesfully sent",
+  "message": "Package was succesfully shipped and email confirmation was sent to jepulis.jepjepjep@gmail.com",
   "status": 200,
-  "shippingStatus": "Shippment was sent to eklofcas@arcada.fi",
-  "emailSent": "true",
-  "quantity": "2",
-  "id": "2",
-  "product": "Asus GeForce RTX 3080 ROG Strix - OC Edition -näytönohjain, 12GB GDDR6X"
+  "shippingStatus": "Shippment was sent to jepulis.jepjepjep@gmail.com",
+  "emailSent": true,
+  "quantity": "10",
+  "id": "1000020000123"
 }
 ```
