@@ -12,12 +12,10 @@ Authorization: Bearer {{token}}
 {
     "id": "1000020000123",
     "quantity": "10",
-    "email": "eklofcas@arcada.fi",
-    "productName" : "Asus GeForce RTX 3080 ROG Strix - OC Edition -näytönohjain, 12GB GDDR6X"
+    "email": "jepulis.jepjepjep@gmail.com"
 }
 
 ###
-
-
- POST {{baseUrl}}/api/shipping/reduce?id=1&quantity=1&email=eklofcas@arcada.fi
+POST {{baseUrl}}/api/shipping/reduce?id=1&quantity=1&email=jepulis.jepjepjep@gmail.com
+Authorization: Bearer {{token}} 
 
