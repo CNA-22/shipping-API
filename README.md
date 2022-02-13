@@ -12,15 +12,35 @@ Endpoint: https://cna22-shipping-service.azurewebsites.net/
 ### POST
 This is a post endpoint with query parameters <br/>
 Endpoint: https://cna22-shipping-service.azurewebsites.net/api/shipping/reduce <br/>
+A valid bearer token from user service is required [https://github.com/CNA-22/user-service/blob/main/README.md]<br/>
 Url must contain:
 * ID
 * Quantity
 * Email
 
+
+
 #### Example URL:
 
-https://cna22-shipping-service.azurewebsites.net/api/shipping/reduce?id=1&quantity=1&email=jepulis.jepjepjep@gmail.com
+https://cna22-shipping-service.azurewebsites.net/api/shipping/reduce?id=1&quantity=1&email=jepulis.jepjepjep@gmail.com <br/><br/>
+Authorization: Bearer token  
 
+#### Returns status 401 if no bearer token is provided
+
+```
+{
+  "auth": false,
+  "message": "No token provided."
+}
+```
+#### Returns status 500 if token is failed to authenticate
+
+```
+{
+  "auth": false,
+  "message": "Failed to authenticate token."
+}
+```
 #### Returns status 400 if id or quantity is equals null:
 ```
 {
@@ -72,7 +92,8 @@ https://cna22-shipping-service.azurewebsites.net/api/shipping/reduce?id=1&quanti
 
 ### POST
 This is a post endpoint with JSON body <br/>
-Endpoint:https://cna22-shipping-service.azurewebsites.net/api/shipping/reduce/product <br/>
+Endpoint: https://cna22-shipping-service.azurewebsites.net/api/shipping/reduce/product <br/>
+A valid token from user service is required [https://github.com/CNA-22/user-service/blob/main/README.md]<br/>
 JSON body must contain:
 * ID
 * Quantity
@@ -81,12 +102,30 @@ JSON body must contain:
 #### Example body:
 ```
 content-type: application/json
+Authorization: Bearer token 
 
 {
     "id": "1000020000123",
     "quantity": "10",
     "email": "jepulis.jepjepjep@gmail.com"
 }
+```
+#### Returns status 401 if no bearer token is provided
+
+```
+{
+  "auth": false,
+  "message": "No token provided."
+}
+```
+#### Returns status 500 if token is failed to authenticate
+
+```
+{
+  "auth": false,
+  "message": "Failed to authenticate token."
+}
+
 ```
 
 #### Returns status 400 if id, quantity or productName is equals null:
