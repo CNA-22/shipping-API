@@ -20,8 +20,7 @@ const emailService = process.env.EMAIL_SERVICE;
     
     TODO LIST:
     - storageCaller() function --> use commented code when inventory service is functional and doesn't chrash
-    - Check email service --> no mail sent even though response is 200 --> email filter?
-    - Update README
+    - Check inventory service documentation to finish API
     
     --------------------------------------------------
 
@@ -50,11 +49,8 @@ async function storageCaller(id, quantity, authHeader){
     //TEST
     let res = await axios.get('https://fakestoreapi.com/products/1');
     //INVENTORY API
-    // Borde vara post men inventeroy apin kan patchas direkt ¯\_(ツ)_/¯
     /*let res = await axios.patch(`${inventoryService}`+id, {
         pid: id,
-        //Inventory api patch endpoint requires pris
-        pris: '0',
         antal: quantity
     }, options); */
     return res.status;
