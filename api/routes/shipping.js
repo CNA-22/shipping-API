@@ -14,18 +14,6 @@ const inventoryService = process.env.INVENTORY_SERVICE;
 const userService = process.env.USER_SERVICE;
 const emailService = process.env.EMAIL_SERVICE;
 
-
-/*
-    --------------------------------------------------
-    
-    TODO LIST:
-    - storageCaller() function --> use commented code when inventory service is functional and doesn't chrash
-    - Check inventory service documentation to finish API
-    
-    --------------------------------------------------
-
-*/
-
 router.use(bodyParser.json());
 
 // Access Control Allow Any Origin
@@ -45,33 +33,40 @@ async function storageCaller(id, quantity, authHeader){
     const options = {
         headers: {'Content-Type': 'application/json',  'Authorization': authHeader}
     }
-    //Add correct API here 
     //TEST
-    let res = await axios.get('https://fakestoreapi.com/products/1');
-    //INVENTORY API
-    /*let res = await axios.patch(`${inventoryService}`+id, {
-        pid: id,
+    //let res = await axios.get('https://fakestoreapi.com/products/1');
+    //INVENTORY SERVICE
+    let res = await axios.patch(`${inventoryService+id}`, {
         antal: quantity
-    }, options); */
+    }, options).catch(function (error) {
+        if (error.response) {
+            return error.response.status;
+        }
+    });
     return res.status;
 }    
 
 //Send Email function
 async function sendEmail(email, authHeader){
-    //login()
+
     const options = {
-        headers: {'Content-Type': 'application/json',  'Authorization': authHeader /*`Bearer ${token}` */}
+        headers: {'Content-Type': 'application/json',  'Authorization': authHeader }
     }
     let res = await axios.post(`${emailService}`, {
         to: email, 
-        subject: "Test mail Newest", 
-        body: "Testmail message" 
-        }, options);
+        subject: "Your order was shipped succesfully", 
+        body: "Your order was shipped succesfully"
+        }, options).catch(function (error) {
+            if(error.response) {
+                return error.response.status;
+            }
+        });
 
     return res.status;
 }
-
+// Api Function function
 async function apiFunction(id, quantity, email, authHeader, res) {
+    // Bearer authentication
     const token = authHeader && authHeader.split(' ')[1];
     if (!token) {
         return res.status(401).send({
@@ -86,7 +81,7 @@ async function apiFunction(id, quantity, email, authHeader, res) {
             auth: false, 
             message: 'Failed to authenticate token.' });   
     }
-
+    // Check for incoming requests. Must contain Id, email and quantity.
     if(id == null || quantity == null || email == null) {
         return res.status(400).json({
             status: res.statusCode,
@@ -100,8 +95,10 @@ async function apiFunction(id, quantity, email, authHeader, res) {
             message: 'Quantity must be a number over 0'
         });
     }
+    // Sending request to inventory-service with this function
     let storageStatus = await storageCaller(id, quantity, authHeader);
 
+    // Check for inventory service response
     if(storageStatus == 404){
         return res.status(404).json({
             status: res.statusCode,
@@ -120,10 +117,12 @@ async function apiFunction(id, quantity, email, authHeader, res) {
             message: 'The server does not support the functionality required to fulfill the request'
         })
     }
+    // Sending request to email-service with this function
     let emailStatus = await sendEmail(email, authHeader);
     let emailSent;
     let message;
 
+    // Check for email service response
     if (emailStatus != 200) {
         emailSent = false;
         message = 'Package was successfully shipped but email confirmation could not be sent to ' + email;
@@ -132,7 +131,7 @@ async function apiFunction(id, quantity, email, authHeader, res) {
         emailSent = true;
         message = 'Package was succesfully shipped and email confirmation was sent to ' + email;
     }
-
+    // Request ends with a JSON response
     res.json({
        message: message,
        status: res.statusCode,
@@ -152,6 +151,7 @@ router.post('/reduce/product', async(req,res) =>{
     apiFunction(id, quantity, email, authHeader, res);
 });
 
+// Get Endpoint
 router.get('/', (req,res) =>{
     res.json({
         message:'This is a Shipping Service',
