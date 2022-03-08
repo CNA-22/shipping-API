@@ -10,12 +10,12 @@ Content-Type: application/json
 Authorization: Bearer {{token}} 
 
 {
-    "id": "1000020000123",
+    "id": "55555555555",
     "quantity": "10",
     "email": "jepulis.jepjepjep@gmail.com"
 }
 
 ###
-POST {{baseUrl}}/api/shipping/reduce?id=1&quantity=1&email=jepulis.jepjepjep@gmail.com
+POST {{baseUrl}}/api/shipping/reduce?id=55555555555&quantity=1&email=jepulis.jepjepjep@gmail.com
 Authorization: Bearer {{token}} 
 
